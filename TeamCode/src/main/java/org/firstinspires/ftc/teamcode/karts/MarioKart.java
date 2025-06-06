@@ -1,13 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.karts;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Kart;
 
-public class DonkeyKongKart extends Kart {
-
-    public DcMotorEx rMotor, lMotor;
+public class MarioKart extends Kart {
 
     static double basePower = 0.6;
 
@@ -31,21 +29,15 @@ public class DonkeyKongKart extends Kart {
             {1000, 0, 0} //maximum
     };
 
-    public DonkeyKongKart(HardwareMap hwMap, Telemetry telemetry) {
+    public MarioKart(HardwareMap hwMap, Telemetry telemetry) {
 
         super(hwMap, telemetry, basePower, redColorRange, greenColorRange, blueColorRange, yellowColorRange);
-        rMotor = hwMap.get(DcMotorEx.class, "rMotor");
-        lMotor = hwMap.get(DcMotorEx.class, "lMotor");
 
-
-        rMotor.setDirection(DcMotorEx.Direction.FORWARD);
-        lMotor.setDirection(DcMotorEx.Direction.FORWARD);
 
     }
 
     @Override
     public void drive(double power, double strafe, double turn) {
-            lMotor.setPower(power - 0.4 * turn);
-            rMotor.setPower(-power - 0.4 * turn);
+        //TODO: ADD DRIVE CODE
     }
 }

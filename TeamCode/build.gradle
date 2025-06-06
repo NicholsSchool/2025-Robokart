@@ -50,7 +50,7 @@ Task deleteTask = tasks.register("deleteKartConfig") {
     }
 }.get()
 
-String[] kartList = ["Bowser", "DonkeyKong"]
+String[] kartList = ["Mario", "Luigi", "Peach", "Yoshi", "Bowser", "DonkeyKong"]
 
 for (int i = 0; i < kartList.length; i++) {
     String kart = kartList[i]

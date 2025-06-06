@@ -3,6 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.karts.BowserKart;
+import org.firstinspires.ftc.teamcode.karts.DonkeyKongKart;
+import org.firstinspires.ftc.teamcode.karts.LuigiKart;
+import org.firstinspires.ftc.teamcode.karts.MarioKart;
+import org.firstinspires.ftc.teamcode.karts.PeachKart;
+import org.firstinspires.ftc.teamcode.karts.YoshiKart;
+
 import java.io.IOException;
 import java.util.Properties;
 
@@ -34,6 +41,21 @@ public class KartTeleop extends OpMode {
         switch (kartString) {
             case "DonkeyKong":
                 kart = new DonkeyKongKart(hardwareMap, telemetry);
+                break;
+            case "Bowser":
+                kart = new BowserKart(hardwareMap, telemetry);
+                break;
+            case "Mario":
+                kart = new MarioKart(hardwareMap, telemetry);
+                break;
+            case "Luigi":
+                kart = new LuigiKart(hardwareMap, telemetry);
+                break;
+            case "Peach":
+                kart = new PeachKart(hardwareMap, telemetry);
+                break;
+            case "Yoshi":
+                kart = new YoshiKart(hardwareMap, telemetry);
                 break;
             default:
                 throw new RuntimeException("Illegal Kart Configuration: " + kartString);
