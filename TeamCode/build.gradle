@@ -26,3 +26,45 @@ android {
 dependencies {
     implementation project(':FtcRobotController')
 }
+
+Task writeKartConfig(String kartType) {
+    return tasks.register("write" + kartType + "KartConfig") {
+        doLast {
+            println "---------------------------------------------------"
+            println "Writing KartConfig for kart " + kartType + "."
+            println "---------------------------------------------------"
+            file("src/main/assets/KartConfig.properties").createNewFile()
+            File fIn = file("src/main/kartConfig/" + kartType + ".config.properties")
+            File fOut = file("src/main/assets/KartConfig.properties")
+            fOut.text = fIn.text
+        }
+    }.get()
+}
+
+Task deleteTask = tasks.register("deleteKartConfig") {
+    doLast {
+        file("src/main/assets/KartConfig.properties").delete()
+        println "---------------------------------------------------"
+        println "KartConfig Cleaned."
+        println "---------------------------------------------------"
+    }
+}.get()
+
+String[] kartList = ["Bowser", "DonkeyKong"]
+
+for (int i = 0; i < kartList.length; i++) {
+    String kart = kartList[i]
+    Task configTask = writeKartConfig(kart)
+    tasks.register('build' + kart) {
+        group '!RoboKart Build'
+        tasks.named('build').get().dependsOn(configTask)
+        tasks.named('build').get().finalizedBy(deleteTask)
+        finalizedBy build
+    }
+    tasks.register('install' + kart + "Release") {
+        group '!RoboKart Install'
+        tasks.named('installRelease').get().dependsOn(configTask)
+        tasks.named('installRelease').get().finalizedBy(deleteTask)
+        finalizedBy build
+    }
+}
