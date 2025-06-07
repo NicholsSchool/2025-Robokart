@@ -65,6 +65,6 @@ for (int i = 0; i < kartList.length; i++) {
         group '!RoboKart Install'
         tasks.named('installRelease').get().dependsOn(configTask)
         tasks.named('installRelease').get().finalizedBy(deleteTask)
-        finalizedBy build
+        finalizedBy installRelease
     }
 }

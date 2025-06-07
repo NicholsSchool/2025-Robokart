@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.karts;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -7,7 +9,10 @@ import org.firstinspires.ftc.teamcode.Kart;
 
 public class MarioKart extends Kart {
 
+    public DcMotorEx rMotor, lMotor;
+
     static double basePower = 0.6;
+    static double turnMultiplier = 0.4;
 
     static int[][] redColorRange = {
             {800, 0, 0}, //minimum
@@ -31,13 +36,21 @@ public class MarioKart extends Kart {
 
     public MarioKart(HardwareMap hwMap, Telemetry telemetry) {
 
-        super(hwMap, telemetry, basePower, redColorRange, greenColorRange, blueColorRange, yellowColorRange);
-
+        super(hwMap, telemetry, basePower, turnMultiplier, redColorRange, greenColorRange, blueColorRange, yellowColorRange);
+        rMotor = hwMap.get(DcMotorEx.class, "rMotor");
+        lMotor = hwMap.get(DcMotorEx.class, "lMotor");
 
     }
 
     @Override
     public void drive(double power, double strafe, double turn) {
-        //TODO: ADD DRIVE CODE
+        lMotor.setPower(power - turn);
+        rMotor.setPower(-power - turn);
+    }
+
+    @Override
+    public void setMotorZeroPower(DcMotor.ZeroPowerBehavior mode) {
+        lMotor.setZeroPowerBehavior(mode);
+        rMotor.setZeroPowerBehavior(mode);
     }
 }

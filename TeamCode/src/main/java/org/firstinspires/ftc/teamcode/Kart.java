@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -12,10 +14,10 @@ public abstract class Kart {
     public Servo steeringWheel;
     public ColorSensor colorSensor;
     public RevBlinkinLedDriver blinkin;
-    private final double basePower;
+    private final double basePower, turnMultiplier;
     int[][] redColorRange, greenColorRange, blueColorRange, yellowColorRange;
 
-    public Kart(HardwareMap hwMap, Telemetry telemetry, double basePower, int[][] redColorRange, int[][] greenColorRange, int[][] blueColorRange, int[][] yellowColorRange) {
+    public Kart(HardwareMap hwMap, Telemetry telemetry, double basePower, double turnMultiplier, int[][] redColorRange, int[][] greenColorRange, int[][] blueColorRange, int[][] yellowColorRange) {
 
         steeringWheel = hwMap.get(Servo.class, "wheel");
         colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
@@ -24,7 +26,7 @@ public abstract class Kart {
         String currentConfig = hwMap.getClass().toString();
 
         this.basePower = basePower;
-
+        this.turnMultiplier = turnMultiplier;
 
         telemetry.addLine("Current OpMode is ");
         telemetry.addData("", currentOpMode);
@@ -41,17 +43,19 @@ public abstract class Kart {
         double strafeReal;
 
         if (isOverrided) {
-            turnReal = turnOverride;
+            setMotorZeroPower(DcMotor.ZeroPowerBehavior.BRAKE);
+            turnReal = turnOverride * turnMultiplier;
             strafeReal = strafeOverride;
             if (forwardOverride) powerReal = basePower; else if (reverseOverride) powerReal = -basePower; else powerReal = 0;
 
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.HOT_PINK);
         } else {
-            turnReal = turn;
+            setMotorZeroPower(DcMotor.ZeroPowerBehavior.FLOAT);
+            turnReal = turn * turnMultiplier;
             strafeReal = strafe;
             if (forwardButton) powerReal = basePower; else if (reverseButton) powerReal = -basePower; else powerReal = 0;
 
-            colorLights();
+//            colorLights();
         }
 
         drive(powerReal, strafeOverride, turnReal);
@@ -60,6 +64,8 @@ public abstract class Kart {
     }
 
     public abstract void drive(double power, double strafe, double turn);
+
+    public abstract void setMotorZeroPower(DcMotor.ZeroPowerBehavior mode);
 
     public void steer(double turn){
         steeringWheel.setPosition(0.5 + 0.5 * turn);
@@ -120,22 +126,22 @@ public abstract class Kart {
         return Color.NEUTRAL;
     }
 
-    public void colorLights(){
-        if(getColor() == Color.NEUTRAL){
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.GRAY);
-        }
-        if(getColor() == Color.RED){
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
-        }
-        if(getColor() == Color.BLUE){
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
-        }
-        if(getColor() == Color.GREEN){
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-        }
-        if(getColor() == Color.YELLOW){
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
-        }
-
-    }
+//    public void colorLights(){
+//        if(getColor() == Color.NEUTRAL){
+//            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.GRAY);
+//        }
+//        if(getColor() == Color.RED){
+//            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
+//        }
+//        if(getColor() == Color.BLUE){
+//            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
+//        }
+//        if(getColor() == Color.GREEN){
+//            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+//        }
+//        if(getColor() == Color.YELLOW){
+//            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
+//        }
+//
+//    }
 }
