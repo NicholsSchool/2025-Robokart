@@ -14,29 +14,9 @@ public class PeachKart extends Kart {
     static double basePower = 0.6;
     static double turnMultiplier = 0.4;
 
-    static int[][] redColorRange = {
-            {800, 0, 0}, //minimum
-            {1000, 0, 0} //maximum
-    };
-
-    static int[][] greenColorRange = {
-            {800, 0, 0}, //minimum
-            {1000, 0, 0} //maximum
-    };
-
-    static int[][] blueColorRange = {
-            {800, 0, 0}, //minimum
-            {1000, 0, 0} //maximum
-    };
-
-    static int[][] yellowColorRange = {
-            {800, 0, 0}, //minimum
-            {1000, 0, 0} //maximum
-    };
-
     public PeachKart(HardwareMap hwMap, Telemetry telemetry) {
 
-        super(hwMap, telemetry, basePower, turnMultiplier, redColorRange, greenColorRange, blueColorRange, yellowColorRange);
+        super(hwMap, telemetry, basePower, turnMultiplier);
         rMotor = hwMap.get(DcMotorEx.class, "rMotor");
         lMotor = hwMap.get(DcMotorEx.class, "lMotor");
         fMotor = hwMap.get(DcMotorEx.class, "fMotor");

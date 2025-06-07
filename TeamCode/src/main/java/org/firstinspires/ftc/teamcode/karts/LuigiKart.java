@@ -9,34 +9,14 @@ import org.firstinspires.ftc.teamcode.Kart;
 
 public class LuigiKart extends Kart {
 
+    DcMotorEx backLeft, backRight, frontLeft, frontRight, hMotor;
+
     static double basePower = 0.6;
     static double turnMultiplier = 0.4;
 
-    DcMotorEx backLeft, backRight, frontLeft, frontRight, hMotor;
-
-    static int[][] redColorRange = {
-            {800, 0, 0}, //minimum
-            {1000, 0, 0} //maximum
-    };
-
-    static int[][] greenColorRange = {
-            {800, 0, 0}, //minimum
-            {1000, 0, 0} //maximum
-    };
-
-    static int[][] blueColorRange = {
-            {800, 0, 0}, //minimum
-            {1000, 0, 0} //maximum
-    };
-
-    static int[][] yellowColorRange = {
-            {800, 0, 0}, //minimum
-            {1000, 0, 0} //maximum
-    };
-
     public LuigiKart(HardwareMap hwMap, Telemetry telemetry) {
 
-        super(hwMap, telemetry, basePower, turnMultiplier, redColorRange, greenColorRange, blueColorRange, yellowColorRange);
+        super(hwMap, telemetry, basePower, turnMultiplier);
         frontLeft = hwMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hwMap.get(DcMotorEx.class, "frontRight");
         backLeft = hwMap.get(DcMotorEx.class, "backLeft");
