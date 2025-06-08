@@ -84,7 +84,7 @@ public abstract class Kart implements KartConstants{
 
         android.graphics.Color.RGBToHSV(sensorRed, sensorGreen, sensorBlue, sensorHSV);
 
-        if (sensorHSV[1] < 0.4) { return Color.NEUTRAL; }
+        if (sensorHSV[1] < 0.4 || sensorHSV[2] < 0.2) { return Color.NEUTRAL; }
 
         if (sensorHSV[0] > redHueRange[0] && sensorHSV[0] < redHueRange[1]) { return Color.RED; }
         if (sensorHSV[0] > yellowHueRange[0] && sensorHSV[0] < yellowHueRange[1]) {return Color.YELLOW; }
@@ -97,7 +97,7 @@ public abstract class Kart implements KartConstants{
 
     public void colorLights(Color color){
         if(color == Color.NEUTRAL){
-            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.GRAY);
+            blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
         }
         if(color == Color.RED){
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
@@ -111,5 +111,9 @@ public abstract class Kart implements KartConstants{
         if(color == Color.YELLOW){
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
         }
+    }
+
+    public void stop(){
+        blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_RAINBOW_PALETTE);
     }
 }

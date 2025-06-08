@@ -33,6 +33,7 @@ Task writeKartConfig(String kartType) {
             println "---------------------------------------------------"
             println "Writing KartConfig for kart " + kartType + "."
             println "---------------------------------------------------"
+            mkdir("src/main/assets/");
             file("src/main/assets/KartConfig.properties").createNewFile()
             File fIn = file("src/main/kartConfig/" + kartType + ".config.properties")
             File fOut = file("src/main/assets/KartConfig.properties")
