@@ -33,6 +33,8 @@ public abstract class Kart implements KartConstants{
         double turnReal;
         double strafeReal;
 
+        Color sensorColor = getColor();
+
         if (isOverrided) {
             setMotorZeroPower(DcMotor.ZeroPowerBehavior.BRAKE);
             turnReal = turnOverride * turnMultiplier;
@@ -46,7 +48,10 @@ public abstract class Kart implements KartConstants{
             strafeReal = strafe;
             if (forwardButton) powerReal = basePower; else if (reverseButton) powerReal = -basePower; else powerReal = 0;
 
-            colorLights();
+            powerReal *= (sensorColor == Color.GREEN ? speedBoostMult : 1.0) * (sensorColor == Color.RED ? slowDownMult : 1.0);
+            turnReal = turnReal * (sensorColor == Color.BLUE ? oilSlickMult : 1.0) + turnMultiplier * (sensorColor == Color.YELLOW ? bananaOffset : 1.0);
+
+            colorLights(sensorColor);
         }
 
         drive(powerReal, strafeReal, turnReal);
@@ -75,11 +80,11 @@ public abstract class Kart implements KartConstants{
         int sensorRed = colorSensor.red() / 1000 * 255;
         int sensorGreen = colorSensor.green() / 1000 * 255;
         int sensorBlue = colorSensor.blue() / 1000 * 255;
-        float[] sensorHSV = {0, 0, (float) 0.5}; //middle grey by default
+        float[] sensorHSV = {0, 0, (float) 0.3};
 
         android.graphics.Color.RGBToHSV(sensorRed, sensorGreen, sensorBlue, sensorHSV);
 
-        if (sensorHSV[2] < 0.4) { return Color.NEUTRAL; }
+        if (sensorHSV[1] < 0.4) { return Color.NEUTRAL; }
 
         if (sensorHSV[0] > redHueRange[0] && sensorHSV[0] < redHueRange[1]) { return Color.RED; }
         if (sensorHSV[0] > yellowHueRange[0] && sensorHSV[0] < yellowHueRange[1]) {return Color.YELLOW; }
@@ -90,22 +95,21 @@ public abstract class Kart implements KartConstants{
 
     }
 
-    public void colorLights(){
-        if(getColor() == Color.NEUTRAL){
+    public void colorLights(Color color){
+        if(color == Color.NEUTRAL){
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.GRAY);
         }
-        if(getColor() == Color.RED){
+        if(color == Color.RED){
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
         }
-        if(getColor() == Color.BLUE){
+        if(color == Color.BLUE){
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
         }
-        if(getColor() == Color.GREEN){
+        if(color == Color.GREEN){
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
         }
-        if(getColor() == Color.YELLOW){
+        if(color == Color.YELLOW){
             blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
         }
-
     }
 }
