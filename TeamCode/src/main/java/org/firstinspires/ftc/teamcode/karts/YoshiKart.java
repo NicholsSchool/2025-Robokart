@@ -11,7 +11,7 @@ public class YoshiKart extends Kart {
 
     public DcMotorEx rMotor, lMotor, fMotor;
 
-    static double basePower = 0.6;
+    static double basePower = 0.8;
     static double turnMultiplier = 0.4;
 
     public YoshiKart(HardwareMap hwMap, Telemetry telemetry) {

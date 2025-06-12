@@ -26,10 +26,10 @@ public class BowserKart extends Kart {
 
     @Override
     public void drive(double power, double strafe, double turn) {
-        frontLeft.setPower((-power + strafe) - turn);
-        frontRight.setPower((power - strafe) - turn);
-        backRight.setPower((power + strafe) - turn);
-        backLeft.setPower((-power - strafe) - turn);
+        frontLeft.setPower((power + strafe) - turn);
+        frontRight.setPower((-power - strafe) - turn);
+        backRight.setPower((-power + strafe) - turn);
+        backLeft.setPower((power - strafe) - turn);
     }
 
     @Override

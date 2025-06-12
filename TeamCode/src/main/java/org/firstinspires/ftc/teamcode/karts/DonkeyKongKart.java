@@ -12,7 +12,7 @@ public class DonkeyKongKart extends Kart {
     public DcMotorEx rMotor, lMotor;
 
     static double basePower = 0.6;
-    static double turnMultiplier = 0.4;
+    static double turnMultiplier = 0.5;
 
     public DonkeyKongKart(HardwareMap hwMap, Telemetry telemetry) {
 
@@ -25,7 +25,7 @@ public class DonkeyKongKart extends Kart {
     @Override
     public void drive(double power, double strafe, double turn) {
         lMotor.setPower(power - turn);
-        rMotor.setPower(power - turn);
+        rMotor.setPower(-power - turn);
     }
 
     @Override

@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode;
 public interface KartConstants {
 
     //HUE RANGES MEASURED IN DEGREES, 0 TO 360
-    float[] redHueRange = {0, 25};
-    float[] yellowHueRange = {30, 70};
-    float[] greenHueRange = {80, 140};
-    float[] blueHueRange = {190, 240};
+    float[] redHueRange = {40, 80};
+    float[] yellowHueRange = {90, 120};
+    float[] greenHueRange = {140, 185};
+    float[] blueHueRange = {200, 220};
 
     double speedBoostMult = 1.5;
     double slowDownMult = 0.5;
